@@ -37,33 +37,11 @@ session_start();
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
+            $search_query = isset($_GET['query']) ? $_GET['query'] : '';
+            $sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'name';
 
-        $search_query = "";
-        if (isset($_GET['query'])) {
-            $search_query = $_GET['query'];
-        }
-
-        $sort_by = "name";
-        if (isset($_GET['sort'])) {
-            $sort_by = $_GET['sort'];
-        }
-
-        $sql = "SELECT * FROM students";
-        $result = $conn->query($sql);
-
-        $search_query = "";
-        if (isset($_GET['query'])) {
-            $search_query = $_GET['query'];
-            }
-
-        $sql = "SELECT * FROM students WHERE name LIKE '%$search_query%' OR usn LIKE '%$search_query%' OR phone LIKE '%$search_query%'";
-
-        $sort_by = "name";
-        if (isset($_GET['sort'])) {
-            $sort_by = $_GET['sort'];
-        }
-
-        $sql = "SELECT * FROM students ORDER BY $sort_by";
+            $sql = "SELECT * FROM students WHERE name LIKE '%$search_query%' OR usn LIKE '%$search_query%' OR phone LIKE '%$search_query%' ORDER BY $sort_by";
+       
 
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
